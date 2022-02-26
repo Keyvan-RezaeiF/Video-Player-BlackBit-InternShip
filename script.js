@@ -13,10 +13,14 @@ const seekBar = document.querySelector('.seek_bar')
 
 const playVideo = () => {
   videoElem.play()
+  playBtn.style.display = "none"
+  pauseBtn.style.display = "block"
 }
 
 const pauseVideo = () => {
   videoElem.pause()
+  pauseBtn.style.display = "none"
+  playBtn.style.display = "block"
 }
 
 const expandScreen = () => {
@@ -92,8 +96,12 @@ const hideControls = () => {
 const togglePlayingByMouse = () => {
   if (videoElem.paused) {
     videoElem.play()
+    playBtn.style.display = "none"
+    pauseBtn.style.display = "block"
   } else {
     videoElem.pause()
+    pauseBtn.style.display = "none"
+    playBtn.style.display = "block"
   }
 }
 
@@ -133,6 +141,8 @@ const changeVideoTime = (event) => {
 controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
+pauseBtn.style.display = "none"
+coloredBar.style.width = "0%"
 
 playBtn.addEventListener('click', playVideo)
 pauseBtn.addEventListener('click', pauseVideo)

@@ -59,6 +59,7 @@ i:hover {
   top: 10px;
   left: 0;
   width: 100%;
+  cursor: pointer;
 }
 
 .colored_bar {
