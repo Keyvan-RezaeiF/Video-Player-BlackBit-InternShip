@@ -10,6 +10,8 @@ const timeDiv = document.querySelector('#time')
 const controlsDiv = document.querySelector(".controls")
 const coloredBar = document.querySelector('.colored_bar')
 const seekBar = document.querySelector('.seek_bar')
+const nextBtn = document.querySelector('.gg-play-track-next-o')
+const prevBtn = document.querySelector('.gg-play-track-prev-o')
 
 const playVideo = () => {
   videoElem.play()
@@ -171,7 +173,39 @@ const goBackOrForward = (event) => {
   }
 }
 
+const playNextVideo = () => {
+  currentVideoIndex += 1
+  currentVideoIndex %= videos.length
+  videoElem.src = `./videos/${videos[currentVideoIndex]}`
+  controlsDiv.style.display = "none"
+  showTime()
+  videoElem.volume = 1
+  pauseBtn.style.display = "none"
+  playBtn.style.display = "block"
+  coloredBar.style.width = "0%"
+}
+
+const playPrevVideo = () => {
+  currentVideoIndex -= 1
+  if (currentVideoIndex == -1) {
+    currentVideoIndex = videos.length - 1
+  }
+  videoElem.src = `./videos/${videos[currentVideoIndex]}`
+  controlsDiv.style.display = "none"
+  showTime()
+  videoElem.volume = 1
+  pauseBtn.style.display = "none"
+  playBtn.style.display = "block"
+  coloredBar.style.width = "0%"
+}
+
 // Initialization
+const videos = ['dance.mp4', 'ha.mp4', 'jumong.mp4', 'kelas_uni.mp4',
+                'khaarmaadar.mp4', 'kheiliHmAwli.mp4', 'monica.mp4',
+                'navid.mp4', 'rohani.mp4', 'ronaldo.mp4', 'tasirgozar.mp4',
+                'zakhmekari.mp4']
+let currentVideoIndex = 0
+videoElem.src = `./videos/${videos[0]}`
 controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
@@ -193,3 +227,5 @@ videoContainer.addEventListener('mousewheel', event => changeVolumeByScroll(even
 videoElem.addEventListener('timeupdate', updateSeekBar)
 seekBar.addEventListener('click', (event) => changeVideoTime(event))
 document.addEventListener('keydown', (event) => goBackOrForward(event))
+nextBtn.addEventListener('click', playNextVideo)
+prevBtn.addEventListener('click', playPrevVideo)
