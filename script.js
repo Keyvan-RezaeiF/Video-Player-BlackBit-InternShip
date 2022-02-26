@@ -98,10 +98,12 @@ const togglePlayingByMouse = () => {
     videoElem.play()
     playBtn.style.display = "none"
     pauseBtn.style.display = "block"
+    setTimeout(hideControls, 2000)
   } else {
     videoElem.pause()
     pauseBtn.style.display = "none"
     playBtn.style.display = "block"
+    showControls()
   }
 }
 
@@ -109,8 +111,10 @@ const togglePlayingByKeyboard = (event) => {
   if (event.code == "Space") {
     if (videoElem.paused) {
       videoElem.play()
+      setTimeout(hideControls, 2000)
     } else {
       videoElem.pause()
+      showControls()
     }
   }
 }
