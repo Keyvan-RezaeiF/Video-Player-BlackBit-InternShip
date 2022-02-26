@@ -7,6 +7,8 @@ const volume = document.querySelector('.gg-volume')
 const buttons = document.querySelector('.buttons')
 const videoContainer = document.querySelector('.video_container')
 const timeDiv = document.querySelector('#time')
+const controlsDiv = document.querySelector(".controls")
+const coloredBar = document.querySelector('.colored_bar')
 
 const playVideo = () => {
   videoElem.play()
@@ -77,13 +79,13 @@ const updateTime = () => {
   setInterval(() => showTime(), 1000)
 }
 
-const showButtons = () => {
+const showControls = () => {
   updateTime()
-  buttons.style.display = "flex"
+  controlsDiv.style.display = "flex"
 }
 
-const hideButtons = () => {
-  buttons.style.display = "none"
+const hideControls = () => {
+  controlsDiv.style.display = "none"
 }
 
 const togglePlayingByMouse = () => {
@@ -104,19 +106,24 @@ const togglePlayingByKeyboard = (event) => {
   }
 }
 
-const changeVolume = (event) => {
+const changeVolumeByScroll = (event) => {
   event= window.event || event;
   var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
-  if (delta == 1 && videoElem.volume <= 0.95) {
+  if (delta == 1 && videoElem.volume <= 0.95) { // scroll up
     videoElem.volume += 0.05
-  } else if(delta == -1 && videoElem.volume >= 0.05) {
+  } else if(delta == -1 && videoElem.volume >= 0.05) { // scroll down
     videoElem.volume -= 0.05
   }
   videoElem.volume = videoElem.volume.toFixed(2)
 }
 
-buttons.style.display = "none"
+const updateSeekBar = () => {
+  var colored = videoElem.currentTime / videoElem.duration
+  coloredBar.style.width = colored * 100 + "%"
+}
+
+controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
 
@@ -125,8 +132,9 @@ pauseBtn.addEventListener('click', pauseVideo)
 fullScreenBtn.addEventListener('click', expandScreen)
 settings.addEventListener('click', openSettings)
 volume.addEventListener('click', toggleVolume)
-videoContainer.addEventListener('mouseover', showButtons)
-videoContainer.addEventListener('mouseout', hideButtons)
+videoContainer.addEventListener('mouseover', showControls)
+videoContainer.addEventListener('mouseout', hideControls)
 videoElem.addEventListener('click', togglePlayingByMouse)
 document.addEventListener('keydown', (event) => togglePlayingByKeyboard(event))
-videoContainer.addEventListener('mousewheel', event => changeVolume(event))
+videoContainer.addEventListener('mousewheel', event => changeVolumeByScroll(event))
+videoElem.addEventListener('timeupdate', updateSeekBar)
