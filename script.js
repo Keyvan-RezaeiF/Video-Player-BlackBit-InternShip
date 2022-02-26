@@ -17,7 +17,9 @@ const pauseVideo = () => {
 }
 
 const expandScreen = () => {
-  videoElem.requestFullscreen()
+  if (!videoElem.isFullscreen) {
+    videoElem.requestFullscreen()
+  }
 }
 
 const openSettings = () => {
@@ -102,8 +104,21 @@ const togglePlayingByKeyboard = (event) => {
   }
 }
 
+const changeVolume = (event) => {
+  event= window.event || event;
+  var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+
+  if (delta == 1 && videoElem.volume <= 0.95) {
+    videoElem.volume += 0.05
+  } else if(delta == -1 && videoElem.volume >= 0.05) {
+    videoElem.volume -= 0.05
+  }
+  videoElem.volume = videoElem.volume.toFixed(2)
+}
+
 buttons.style.display = "none"
 showTime()
+videoElem.volume = 1
 
 playBtn.addEventListener('click', playVideo)
 pauseBtn.addEventListener('click', pauseVideo)
@@ -114,3 +129,4 @@ videoContainer.addEventListener('mouseover', showButtons)
 videoContainer.addEventListener('mouseout', hideButtons)
 videoElem.addEventListener('click', togglePlayingByMouse)
 document.addEventListener('keydown', (event) => togglePlayingByKeyboard(event))
+videoContainer.addEventListener('mousewheel', event => changeVolume(event))
