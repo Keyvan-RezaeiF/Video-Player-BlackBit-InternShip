@@ -1,6 +1,6 @@
 const videoElem = document.querySelector('video')
-const playBtn = document.querySelector('.gg-play-button')
-const pauseBtn = document.querySelector('.gg-play-pause')
+const playBtn = document.querySelector('.gg-play-button-o')
+const pauseBtn = document.querySelector('.gg-play-pause-o')
 const fullScreenBtn = document.querySelector('.gg-assign')
 const settings = document.querySelector('.gg-more')
 const volume = document.querySelector('.gg-volume')
@@ -138,11 +138,33 @@ const changeVideoTime = (event) => {
   coloredBar.style.width = toBeColored * 100 + '%';
 }
 
+const checkFinish = () => {
+  setInterval(() => {
+    if (videoElem.currentTime == videoElem.duration) {
+      pauseBtn.style.display = "none"
+      playBtn.style.display = "block"
+    }
+  }, 1000)
+}
+
+const goBackOrForward = (event) => {
+  if (event.code == "ArrowRight") {
+    videoElem.currentTime += 5
+    updateTime()
+  } else if (event.code == "ArrowLeft") {
+    videoElem.currentTime -= 5
+    updateTime()
+  }
+}
+
+// Initialization
 controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
 pauseBtn.style.display = "none"
 coloredBar.style.width = "0%"
+
+checkFinish()
 
 playBtn.addEventListener('click', playVideo)
 pauseBtn.addEventListener('click', pauseVideo)
@@ -156,3 +178,4 @@ document.addEventListener('keydown', (event) => togglePlayingByKeyboard(event))
 videoContainer.addEventListener('mousewheel', event => changeVolumeByScroll(event))
 videoElem.addEventListener('timeupdate', updateSeekBar)
 seekBar.addEventListener('click', (event) => changeVideoTime(event))
+document.addEventListener('keydown', (event) => goBackOrForward(event))
