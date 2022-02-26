@@ -68,3 +68,19 @@ i:hover {
   width: 100px;
   background-color: #f00;
 }
+
+
+.after_finish {
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 40%;
+  left: 25%;
+  width: 50%;
+  justify-content: space-around;
+}
+
+.after_finish img {
+  cursor: pointer;
+}

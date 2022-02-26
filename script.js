@@ -2,7 +2,7 @@ const videoElem = document.querySelector('video')
 const playBtn = document.querySelector('.gg-play-button-o')
 const pauseBtn = document.querySelector('.gg-play-pause-o')
 const fullScreenBtn = document.querySelector('.gg-assign')
-const settings = document.querySelector('.gg-more')
+const settingsBtn = document.querySelector('.gg-more')
 const volume = document.querySelector('.gg-volume')
 const buttons = document.querySelector('.buttons')
 const videoContainer = document.querySelector('.video_container')
@@ -12,6 +12,9 @@ const coloredBar = document.querySelector('.colored_bar')
 const seekBar = document.querySelector('.seek_bar')
 const nextBtn = document.querySelector('.gg-play-track-next-o')
 const prevBtn = document.querySelector('.gg-play-track-prev-o')
+const reaplyBtn = document.querySelector('.replay_img')
+const nextAfterFinishBtn = document.querySelector('.next_video_img')
+const afterFinishDiv = document.querySelector('.after_finish')
 
 const playVideo = () => {
   videoElem.play()
@@ -149,6 +152,11 @@ const checkFinish = () => {
     if (videoElem.currentTime == videoElem.duration) {
       pauseBtn.style.display = "none"
       playBtn.style.display = "block"
+      videoElem.style.opacity = "0.3"
+      afterFinishDiv.style.display = "flex"
+      // go to next video after finishing current video
+      // timeoutId = setTimeout(playNextVideo, 3000)
+      // clearTimeout(timeoutId)
     }
   }, 1000)
 }
@@ -179,10 +187,11 @@ const playNextVideo = () => {
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
   controlsDiv.style.display = "none"
   showTime()
-  videoElem.volume = 1
   pauseBtn.style.display = "none"
   playBtn.style.display = "block"
   coloredBar.style.width = "0%"
+  afterFinishDiv.style.display = "none"
+  videoElem.style.opacity = "1"
 }
 
 const playPrevVideo = () => {
@@ -193,10 +202,24 @@ const playPrevVideo = () => {
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
   controlsDiv.style.display = "none"
   showTime()
-  videoElem.volume = 1
   pauseBtn.style.display = "none"
   playBtn.style.display = "block"
   coloredBar.style.width = "0%"
+  afterFinishDiv.style.display = "none"
+  videoElem.style.opacity = "1"
+}
+
+const replayVideo = () => {
+  videoElem.src = `./videos/${videos[currentVideoIndex]}`
+  videoElem.currentTime = 0
+  controlsDiv.style.display = "none"
+  showTime()
+  playVideo()
+  pauseBtn.style.display = "block"
+  playBtn.style.display = "none"
+  coloredBar.style.width = "0%"
+  afterFinishDiv.style.display = "none"
+  videoElem.style.opacity = "1"
 }
 
 // Initialization
@@ -211,13 +234,14 @@ showTime()
 videoElem.volume = 1
 pauseBtn.style.display = "none"
 coloredBar.style.width = "0%"
+afterFinishDiv.style.display = "none"
 
 checkFinish()
 
 playBtn.addEventListener('click', playVideo)
 pauseBtn.addEventListener('click', pauseVideo)
 fullScreenBtn.addEventListener('click', expandScreen)
-settings.addEventListener('click', openSettings)
+settingsBtn.addEventListener('click', openSettings)
 volume.addEventListener('click', toggleVolume)
 videoContainer.addEventListener('mouseover', showControls)
 videoContainer.addEventListener('mouseout', hideControls)
@@ -229,3 +253,5 @@ seekBar.addEventListener('click', (event) => changeVideoTime(event))
 document.addEventListener('keydown', (event) => goBackOrForward(event))
 nextBtn.addEventListener('click', playNextVideo)
 prevBtn.addEventListener('click', playPrevVideo)
+reaplyBtn.addEventListener('click', replayVideo)
+nextAfterFinishBtn.addEventListener('click', playNextVideo)
