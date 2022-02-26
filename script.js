@@ -117,7 +117,7 @@ const togglePlayingByKeyboard = (event) => {
 
 const changeVolumeByScroll = (event) => {
   event= window.event || event;
-  var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+  let delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
   if (delta == 1 && videoElem.volume <= 0.95) { // scroll up
     videoElem.volume += 0.05
@@ -128,7 +128,7 @@ const changeVolumeByScroll = (event) => {
 }
 
 const updateSeekBar = () => {
-  var colored = videoElem.currentTime / videoElem.duration
+  let colored = videoElem.currentTime / videoElem.duration
   coloredBar.style.width = colored * 100 + "%"
 }
 
@@ -154,6 +154,16 @@ const goBackOrForward = (event) => {
   } else if (event.code == "ArrowLeft") {
     videoElem.currentTime -= 5
     updateTime()
+  } else if (event.code == "ArrowUp") {
+    if (videoElem.volume <= 0.95) {
+      videoElem.volume += 0.05
+    }
+    videoElem.volume = videoElem.volume.toFixed(2)
+  } else if (event.code == "ArrowDown") {
+    if(videoElem.volume >= 0.05) {
+      videoElem.volume -= 0.05
+    }
+    videoElem.volume = videoElem.volume.toFixed(2)
   }
 }
 
