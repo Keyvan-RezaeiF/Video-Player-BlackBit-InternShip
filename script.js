@@ -6,6 +6,7 @@ const settings = document.querySelector('.gg-more')
 const volume = document.querySelector('.gg-volume')
 const buttons = document.querySelector('.buttons')
 const videoContainer = document.querySelector('.video_container')
+const timeDiv = document.querySelector('#time')
 
 const playVideo = () => {
   videoElem.play()
@@ -31,7 +32,46 @@ const toggleVolume = () => {
   }
 }
 
+const convertToMinutes = (timeInMiliSeconds) => {
+  const timeInSeconds = timeInMiliSeconds.toFixed(0)
+
+  let hours = Math.floor(timeInSeconds / 3600)
+  let minutes = Math.floor(timeInSeconds / 60)
+  let seconds = timeInSeconds % 60
+
+  if (hours < 10) {
+    hours = "0" + hours
+  }
+  if (minutes < 10) {
+    minutes = "0" + minutes
+  }
+  if (seconds < 10) {
+    seconds = "0" + seconds
+  }
+
+  const time = hours + ":" + minutes + ":" + seconds
+  return time
+}
+
+const showTime = () => {
+  const videoCurrentTime = convertToMinutes(videoElem.currentTime)
+
+  // to prevent showing undefined for duration at first time
+  videoElem.onloadedmetadata = function() {
+    const videoDurationTime = convertToMinutes(videoElem.duration)
+    timeDiv.innerText = `${videoCurrentTime}/${videoDurationTime}`
+  };
+
+  const videoDurationTime = convertToMinutes(videoElem.duration)
+  timeDiv.innerText = `${videoCurrentTime}/${videoDurationTime}`
+}
+
+const updateTime = () => {
+  setInterval(() => showTime(), 1000)
+}
+
 const showButtons = () => {
+  updateTime()
   buttons.style.display = "flex"
 }
 
@@ -48,6 +88,7 @@ const togglePlaying = () => {
 }
 
 buttons.style.display = "none"
+showTime()
 
 playBtn.addEventListener('click', playVideo)
 pauseBtn.addEventListener('click', pauseVideo)
