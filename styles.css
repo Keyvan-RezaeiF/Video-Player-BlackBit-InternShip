@@ -37,6 +37,7 @@ video {
   align-items: center;
   width: 100%;
   justify-content: space-around;
+  height:30px;
 }
 
 i {
