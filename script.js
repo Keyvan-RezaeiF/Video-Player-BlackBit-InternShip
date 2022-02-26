@@ -36,7 +36,7 @@ const convertToMinutes = (timeInMiliSeconds) => {
   const timeInSeconds = timeInMiliSeconds.toFixed(0)
 
   let hours = Math.floor(timeInSeconds / 3600)
-  let minutes = Math.floor(timeInSeconds / 60)
+  let minutes = Math.floor(timeInSeconds / 60) % 60
   let seconds = timeInSeconds % 60
 
   if (hours < 10) {
@@ -49,7 +49,12 @@ const convertToMinutes = (timeInMiliSeconds) => {
     seconds = "0" + seconds
   }
 
-  const time = hours + ":" + minutes + ":" + seconds
+  let time = ""
+  if (hours == "00") {
+    time = minutes + ":" + seconds
+  } else {
+    time = hours + ":" + minutes + ":" + seconds
+  }
   return time
 }
 
