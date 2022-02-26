@@ -9,6 +9,7 @@ const videoContainer = document.querySelector('.video_container')
 const timeDiv = document.querySelector('#time')
 const controlsDiv = document.querySelector(".controls")
 const coloredBar = document.querySelector('.colored_bar')
+const seekBar = document.querySelector('.seek_bar')
 
 const playVideo = () => {
   videoElem.play()
@@ -123,6 +124,12 @@ const updateSeekBar = () => {
   coloredBar.style.width = colored * 100 + "%"
 }
 
+const changeVideoTime = (event) => {
+  let toBeColored = event.offsetX / videoContainer.offsetWidth;
+  videoElem.currentTime = toBeColored * videoElem.duration;
+  coloredBar.style.width = toBeColored * 100 + '%';
+}
+
 controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
@@ -138,3 +145,4 @@ videoElem.addEventListener('click', togglePlayingByMouse)
 document.addEventListener('keydown', (event) => togglePlayingByKeyboard(event))
 videoContainer.addEventListener('mousewheel', event => changeVolumeByScroll(event))
 videoElem.addEventListener('timeupdate', updateSeekBar)
+seekBar.addEventListener('click', (event) => changeVideoTime(event))
