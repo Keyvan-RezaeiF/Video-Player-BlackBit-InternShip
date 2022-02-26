@@ -79,11 +79,21 @@ const hideButtons = () => {
   buttons.style.display = "none"
 }
 
-const togglePlaying = () => {
+const togglePlayingByMouse = () => {
   if (videoElem.paused) {
     videoElem.play()
   } else {
     videoElem.pause()
+  }
+}
+
+const togglePlayingByKeyboard = (event) => {
+  if (event.code == "Space") {
+    if (videoElem.paused) {
+      videoElem.play()
+    } else {
+      videoElem.pause()
+    }
   }
 }
 
@@ -97,4 +107,5 @@ settings.addEventListener('click', openSettings)
 volume.addEventListener('click', toggleVolume)
 videoContainer.addEventListener('mouseover', showButtons)
 videoContainer.addEventListener('mouseout', hideButtons)
-videoElem.addEventListener('click', togglePlaying)
+videoElem.addEventListener('click', togglePlayingByMouse)
+document.addEventListener('keydown', (event) => togglePlayingByKeyboard(event))
