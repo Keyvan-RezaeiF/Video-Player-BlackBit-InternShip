@@ -25,10 +25,11 @@ video {
 .controls {
   display: flex;
   position: absolute;
-  bottom: 0;
+  transition: 0.3s;
+  bottom: 5px;
   width: 100%;
   flex-wrap: wrap;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .buttons {
