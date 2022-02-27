@@ -84,3 +84,36 @@ i:hover {
 .after_finish img {
   cursor: pointer;
 }
+
+.more_menu {
+  position: relative;
+}
+
+.more_menu i {
+  position: absolute;
+}
+
+.more_options {
+  width: 140px;
+  position: absolute;
+  bottom: 20px;
+  text-align: center;
+  display: none;
+}
+
+.more_options a {
+  text-decoration: none;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  padding: 10px;
+}
+
+/* .sub_menu_content {
+  float: left;
+  overflow: hidden;
+} */
+
+#quality_sub_menu, #speed_sub_menu {
+  display: none;
+}

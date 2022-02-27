@@ -15,6 +15,12 @@ const prevBtn = document.querySelector('.gg-play-track-prev-o')
 const reaplyBtn = document.querySelector('.replay_img')
 const nextAfterFinishBtn = document.querySelector('.next_video_img')
 const afterFinishDiv = document.querySelector('.after_finish')
+const speedBtn = document.querySelector('#speed_menu')
+const qualityBtn = document.querySelector('#quality_menu')
+const speedMenu = document.querySelector('#speed_sub_menu')
+const qualityMenu = document.querySelector('#quality_sub_menu')
+const moreBtn = document.querySelector('.gg-more')
+const moreOptions = document.querySelector('.more_options')
 
 const playVideo = () => {
   videoElem.play()
@@ -32,10 +38,6 @@ const expandScreen = () => {
   if (!videoElem.isFullscreen) {
     videoElem.requestFullscreen()
   }
-}
-
-const openSettings = () => {
-  console.log("settings")
 }
 
 const toggleVolume = () => {
@@ -91,11 +93,11 @@ const updateTime = () => {
 
 const showControls = () => {
   updateTime()
-  controlsDiv.style.display = "flex"
+  // controlsDiv.style.display = "flex"
 }
 
 const hideControls = () => {
-  controlsDiv.style.display = "none"
+  // controlsDiv.style.display = "none"
 }
 
 const togglePlayingByMouse = () => {
@@ -185,13 +187,14 @@ const playNextVideo = () => {
   currentVideoIndex += 1
   currentVideoIndex %= videos.length
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
-  controlsDiv.style.display = "none"
+  // controlsDiv.style.display = "none"
   showTime()
   pauseBtn.style.display = "none"
   playBtn.style.display = "block"
   coloredBar.style.width = "0%"
   afterFinishDiv.style.display = "none"
   videoElem.style.opacity = "1"
+  moreOptions.style.display = ""
 }
 
 const playPrevVideo = () => {
@@ -200,19 +203,20 @@ const playPrevVideo = () => {
     currentVideoIndex = videos.length - 1
   }
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
-  controlsDiv.style.display = "none"
+  // controlsDiv.style.display = "none"
   showTime()
   pauseBtn.style.display = "none"
   playBtn.style.display = "block"
   coloredBar.style.width = "0%"
   afterFinishDiv.style.display = "none"
   videoElem.style.opacity = "1"
+  moreOptions.style.display = ""
 }
 
 const replayVideo = () => {
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
   videoElem.currentTime = 0
-  controlsDiv.style.display = "none"
+  // controlsDiv.style.display = "none"
   showTime()
   playVideo()
   pauseBtn.style.display = "block"
@@ -222,6 +226,22 @@ const replayVideo = () => {
   videoElem.style.opacity = "1"
 }
 
+const toggleMenuOptions = (event, selectedMenu) => {
+  if (selectedMenu.style.display == "") {
+    selectedMenu.style.display = "block"
+  } else if (selectedMenu.style.display == "block") {
+    selectedMenu.style.display = ""
+  }
+}
+
+const changeSpeed = (event) => {
+  videoElem.playbackRate = event.target.innerText
+}
+
+const changeQuality = (event) => {
+  // To be completed later
+}
+
 // Initialization
 const videos = ['dance.mp4', 'ha.mp4', 'jumong.mp4', 'kelas_uni.mp4',
                 'khaarmaadar.mp4', 'kheiliHmAwli.mp4', 'monica.mp4',
@@ -229,7 +249,7 @@ const videos = ['dance.mp4', 'ha.mp4', 'jumong.mp4', 'kelas_uni.mp4',
                 'zakhmekari.mp4']
 let currentVideoIndex = 0
 videoElem.src = `./videos/${videos[0]}`
-controlsDiv.style.display = "none"
+// controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
 pauseBtn.style.display = "none"
@@ -241,7 +261,6 @@ checkFinish()
 playBtn.addEventListener('click', playVideo)
 pauseBtn.addEventListener('click', pauseVideo)
 fullScreenBtn.addEventListener('click', expandScreen)
-settingsBtn.addEventListener('click', openSettings)
 volume.addEventListener('click', toggleVolume)
 videoContainer.addEventListener('mouseover', showControls)
 videoContainer.addEventListener('mouseout', hideControls)
@@ -255,3 +274,8 @@ nextBtn.addEventListener('click', playNextVideo)
 prevBtn.addEventListener('click', playPrevVideo)
 reaplyBtn.addEventListener('click', replayVideo)
 nextAfterFinishBtn.addEventListener('click', playNextVideo)
+qualityBtn.addEventListener('click', (event) => toggleMenuOptions(event, qualityMenu))
+speedBtn.addEventListener('click', (event) => toggleMenuOptions(event, speedMenu))
+settingsBtn.addEventListener('click', (event) => toggleMenuOptions(event, moreOptions))
+speedMenu.addEventListener('click', (event) => changeSpeed(event))
+qualityMenu.addEventListener('click', (event) => changeQuality(event))
