@@ -129,12 +129,12 @@ const togglePlayingByKeyboard = (event) => {
 }
 
 const changeVolumeByScroll = (event) => {
-  event= window.event || event;
+  event = window.event || event;
   let delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
   if (delta == 1 && videoElem.volume <= 0.95) { // scroll up
     videoElem.volume += 0.05
-  } else if(delta == -1 && videoElem.volume >= 0.05) { // scroll down
+  } else if (delta == -1 && videoElem.volume >= 0.05) { // scroll down
     videoElem.volume -= 0.05
   }
   videoElem.volume = videoElem.volume.toFixed(2)
@@ -151,7 +151,7 @@ const changeVideoTime = (event) => {
   coloredBar.style.width = toBeColored * 100 + '%';
 }
 
-const checkFinish = () => {
+const checkIfVideoFinished = () => {
   setInterval(() => {
     if (videoElem.currentTime == videoElem.duration) {
       pauseBtn.style.display = "none"
@@ -185,9 +185,7 @@ const goBackOrForward = (event) => {
   }
 }
 
-const playNextVideo = () => {
-  currentVideoIndex += 1
-  currentVideoIndex %= videos.length
+const resetVideo = () => {
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
   controlsDiv.style.display = "none"
   showTime()
@@ -199,20 +197,18 @@ const playNextVideo = () => {
   moreOptions.style.display = ""
 }
 
+const playNextVideo = () => {
+  currentVideoIndex += 1
+  currentVideoIndex %= videos.length
+  resetVideo()
+}
+
 const playPrevVideo = () => {
   currentVideoIndex -= 1
   if (currentVideoIndex == -1) {
     currentVideoIndex = videos.length - 1
   }
-  videoElem.src = `./videos/${videos[currentVideoIndex]}`
-  controlsDiv.style.display = "none"
-  showTime()
-  pauseBtn.style.display = "none"
-  playBtn.style.display = "block"
-  coloredBar.style.width = "0%"
-  afterFinishDiv.style.display = "none"
-  videoElem.style.opacity = "1"
-  moreOptions.style.display = ""
+  resetVideo()
 }
 
 const replayVideo = () => {
@@ -254,22 +250,27 @@ const changeQuality = (event) => {
 }
 
 // Initialization
+
 const videos = ['dance.mp4', 'ha.mp4', 'jumong.mp4', 'kelas_uni.mp4',
                 'khaarmaadar.mp4', 'kheiliHmAwli.mp4', 'monica.mp4',
                 'navid.mp4', 'rohani.mp4', 'ronaldo.mp4', 'tasirgozar.mp4',
                 'zakhmekari.mp4']
 let currentVideoIndex = 0
 videoElem.src = `./videos/${videos[0]}`
+
 controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
 pauseBtn.style.display = "none"
 coloredBar.style.width = "0%"
 afterFinishDiv.style.display = "none"
+
 changeSelectedColor(initialSpeed)
 changeSelectedColor(initialQuality)
 
-checkFinish()
+checkIfVideoFinished()
+
+// Event Listeners
 
 playBtn.addEventListener('click', playVideo)
 pauseBtn.addEventListener('click', pauseVideo)
