@@ -21,6 +21,8 @@ const speedMenu = document.querySelector('#speed_sub_menu')
 const qualityMenu = document.querySelector('#quality_sub_menu')
 const moreBtn = document.querySelector('.gg-more')
 const moreOptions = document.querySelector('.more_options')
+const initialSpeed = document.querySelector('#initial_speed')
+const initialQuality = document.querySelector('#initial_quality')
 
 const playVideo = () => {
   videoElem.play()
@@ -93,11 +95,11 @@ const updateTime = () => {
 
 const showControls = () => {
   updateTime()
-  // controlsDiv.style.display = "flex"
+  controlsDiv.style.display = "flex"
 }
 
 const hideControls = () => {
-  // controlsDiv.style.display = "none"
+  controlsDiv.style.display = "none"
 }
 
 const togglePlayingByMouse = () => {
@@ -187,7 +189,7 @@ const playNextVideo = () => {
   currentVideoIndex += 1
   currentVideoIndex %= videos.length
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
-  // controlsDiv.style.display = "none"
+  controlsDiv.style.display = "none"
   showTime()
   pauseBtn.style.display = "none"
   playBtn.style.display = "block"
@@ -203,7 +205,7 @@ const playPrevVideo = () => {
     currentVideoIndex = videos.length - 1
   }
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
-  // controlsDiv.style.display = "none"
+  controlsDiv.style.display = "none"
   showTime()
   pauseBtn.style.display = "none"
   playBtn.style.display = "block"
@@ -216,7 +218,7 @@ const playPrevVideo = () => {
 const replayVideo = () => {
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
   videoElem.currentTime = 0
-  // controlsDiv.style.display = "none"
+  controlsDiv.style.display = "none"
   showTime()
   playVideo()
   pauseBtn.style.display = "block"
@@ -234,8 +236,17 @@ const toggleMenuOptions = (event, selectedMenu) => {
   }
 }
 
+const changeSelectedColor = (selectedElem) => {
+  const parentsChildren = selectedElem.parentElement.children
+  for (child of parentsChildren) {
+    child.style.backgroundColor = "rgba(0, 0, 0, 0.4)"
+  }
+  selectedElem.style.backgroundColor = "rgba(0, 0, 0)"
+}
+
 const changeSpeed = (event) => {
   videoElem.playbackRate = event.target.innerText
+  changeSelectedColor(event.target)
 }
 
 const changeQuality = (event) => {
@@ -249,12 +260,14 @@ const videos = ['dance.mp4', 'ha.mp4', 'jumong.mp4', 'kelas_uni.mp4',
                 'zakhmekari.mp4']
 let currentVideoIndex = 0
 videoElem.src = `./videos/${videos[0]}`
-// controlsDiv.style.display = "none"
+controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
 pauseBtn.style.display = "none"
 coloredBar.style.width = "0%"
 afterFinishDiv.style.display = "none"
+changeSelectedColor(initialSpeed)
+changeSelectedColor(initialQuality)
 
 checkFinish()
 
