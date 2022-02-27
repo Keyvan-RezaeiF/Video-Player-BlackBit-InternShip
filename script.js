@@ -167,7 +167,7 @@ const checkIfVideoFinished = () => {
 
 const goBackOrForward = (event) => {
   if (event.code == "ArrowRight") {
-    videoElem.currentTime += 5
+    videoElem.currentTime += 5  
     updateTime()
   } else if (event.code == "ArrowLeft") {
     videoElem.currentTime -= 5

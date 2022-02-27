@@ -114,6 +114,10 @@ i:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+.sub_menu_content a:hover {
+  color: #aaa;
+}
+
 #quality_sub_menu, #speed_sub_menu {
   display: none;
 }
