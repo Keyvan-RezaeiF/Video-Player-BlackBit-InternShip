@@ -129,6 +129,7 @@ const togglePlayingByKeyboard = (event) => {
 }
 
 const changeVolumeByScroll = (event) => {
+  console.log(event)
   event = window.event || event;
   let delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
@@ -206,8 +207,11 @@ const checkIfVideoFinished = () => {
       // go to next video after finishing current video
       // timeoutId = setTimeout(playNextVideo, 3000)
       // clearTimeout(timeoutId)
+    } else {
+      videoElem.style.opacity = "1"
+      afterFinishDiv.style.display = "none"
     }
-  }, 1000)
+  }, 100)
 }
 
 const goBackOrForward = (event) => {
