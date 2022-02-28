@@ -11,8 +11,10 @@
     <link href='https://css.gg/play-track-next-o.css' rel='stylesheet'>
     <link href='https://css.gg/play-track-prev-o.css' rel='stylesheet'>
     <link href='https://css.gg/assign.css' rel='stylesheet'>
-    <link href='https://css.gg/more.css' rel='stylesheet'>    <title>Video Player</title>
+    <link href='https://css.gg/more.css' rel='stylesheet'>
     <link href='https://css.gg/volume.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Video Player</title>
   </head>
   <body>
     <div class="container">
@@ -31,7 +33,19 @@
             <i class="gg-play-button-o"></i>
             <i class="gg-play-pause-o"></i>
             <i class="gg-play-track-next-o"></i>
-            <i class="gg-volume"></i>
+            <div class="volume_icons">
+              <i class="material-icons volume_2">volume_up</i>
+              <i class="material-icons volume_1" style="display: none;">volume_down</i>
+              <i class="material-icons volume_0" style="display: none;">volume_mute</i>
+              <i class="material-icons volume_mute" style="display: none;">volume_off</i>
+            </div>
+            <input
+              type="range"
+              id="vol_range"
+              max="1" min="0"
+              value="1" step="0.05"
+              onchange="changeVolumeByRange(this.value)"
+            >
             <span id="time">00:00 / 00:00</span>
             <div class="more_menu">
               <div class="more_options">
@@ -58,7 +72,7 @@
               </div>
               <i class="gg-more"></i>
             </div>
-            <i class="gg-assign"></i>
+            <i class="material-icons full_screen">fullscreen</i>
           </div>
         </div>
       </div>

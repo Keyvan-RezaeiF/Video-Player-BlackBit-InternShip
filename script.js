@@ -1,9 +1,12 @@
 const videoElem = document.querySelector('video')
 const playBtn = document.querySelector('.gg-play-button-o')
 const pauseBtn = document.querySelector('.gg-play-pause-o')
-const fullScreenBtn = document.querySelector('.gg-assign')
+const fullScreenBtn = document.querySelector('.full_screen')
 const settingsBtn = document.querySelector('.gg-more')
-const volume = document.querySelector('.gg-volume')
+const volumeUp = document.querySelector('.volume_2')
+const volumeDown = document.querySelector('.volume_1')
+const volumeMute = document.querySelector('.volume_0')
+const volumeOff = document.querySelector('.volume_mute')
 const buttons = document.querySelector('.buttons')
 const videoContainer = document.querySelector('.video_container')
 const timeDiv = document.querySelector('#time')
@@ -23,6 +26,7 @@ const moreBtn = document.querySelector('.gg-more')
 const moreOptions = document.querySelector('.more_options')
 const initialSpeed = document.querySelector('#initial_speed')
 const initialQuality = document.querySelector('#initial_quality')
+const volumeInput = document.querySelector('#vol_range')
 
 const playVideo = () => {
   videoElem.play()
@@ -39,14 +43,6 @@ const pauseVideo = () => {
 const expandScreen = () => {
   if (!videoElem.isFullscreen) {
     videoElem.requestFullscreen()
-  }
-}
-
-const toggleVolume = () => {
-  if (videoElem.volume == 0) {
-    videoElem.volume = 1
-  } else {
-    videoElem.volume = 0
   }
 }
 
@@ -120,9 +116,13 @@ const togglePlayingByKeyboard = (event) => {
   if (event.code == "Space") {
     if (videoElem.paused) {
       videoElem.play()
+      playBtn.style.display = "none"
+      pauseBtn.style.display = "block"
       setTimeout(hideControls, 2000)
     } else {
       videoElem.pause()
+      pauseBtn.style.display = "none"
+      playBtn.style.display = "block"
       showControls()
     }
   }
@@ -132,12 +132,57 @@ const changeVolumeByScroll = (event) => {
   event = window.event || event;
   let delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
+  lastVolume = videoElem.volume
   if (delta == 1 && videoElem.volume <= 0.95) { // scroll up
     videoElem.volume += 0.05
   } else if (delta == -1 && videoElem.volume >= 0.05) { // scroll down
     videoElem.volume -= 0.05
   }
   videoElem.volume = videoElem.volume.toFixed(2)
+  volumeInput.value = videoElem.volume
+  changeVolumeIcon()
+}
+
+const changeVolumeByRange = (newVolume) => {
+  lastVolume = videoElem.volume
+  videoElem.volume = newVolume
+  changeVolumeIcon()
+}
+
+const changeVolumeIcon = () => {
+  if (videoElem.volume >= 0.5) {
+    volumeUp.style.display = "block"
+    volumeDown.style.display = "none"
+    volumeOff.style.display = "none"
+    volumeMute.style.display = "none"
+  } else if (videoElem.volume > 0) {
+    volumeUp.style.display = "none"
+    volumeDown.style.display = "block"
+    volumeOff.style.display = "none"
+    volumeMute.style.display = "none"
+  } else if (videoElem.volume == 0) {
+    volumeUp.style.display = "none"
+    volumeDown.style.display = "none"
+    volumeOff.style.display = "none"
+    volumeMute.style.display = "block"
+  }
+}
+
+const toggleVolumeMenu = (event) => {
+  if (event.target.innerText == "volume_up" ||
+    event.target.innerText == "volume_down" ||
+    event.target.innerText == "volume_mute") {
+    event.target.style.display = "none"
+    volumeOff.style.display = "block"
+    lastVolume = videoElem.volume
+    videoElem.volume = 0
+    volumeInput.value = videoElem.volume
+  } else {
+    volumeOff.style.display = "none"
+    videoElem.volume = lastVolume
+    changeVolumeIcon()
+    volumeInput.value = videoElem.volume
+  }
 }
 
 const updateSeekBar = () => {
@@ -174,14 +219,20 @@ const goBackOrForward = (event) => {
     updateTime()
   } else if (event.code == "ArrowUp") {
     if (videoElem.volume <= 0.95) {
+      lastVolume = videoElem.volume
       videoElem.volume += 0.05
     }
     videoElem.volume = videoElem.volume.toFixed(2)
+    changeVolumeIcon()
+    volumeInput.value = videoElem.volume
   } else if (event.code == "ArrowDown") {
-    if(videoElem.volume >= 0.05) {
+    if (videoElem.volume >= 0.05) {
+      lastVolume = videoElem.volume
       videoElem.volume -= 0.05
     }
     videoElem.volume = videoElem.volume.toFixed(2)
+    changeVolumeIcon()
+    volumeInput.value = videoElem.volume
   }
 }
 
@@ -261,6 +312,7 @@ videoElem.src = `./videos/${videos[0]}`
 // controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
+let lastVolume = videoElem.volume
 pauseBtn.style.display = "none"
 coloredBar.style.width = "0%"
 afterFinishDiv.style.display = "none"
@@ -275,7 +327,10 @@ checkIfVideoFinished()
 playBtn.addEventListener('click', playVideo)
 pauseBtn.addEventListener('click', pauseVideo)
 fullScreenBtn.addEventListener('click', expandScreen)
-volume.addEventListener('click', toggleVolume)
+volumeUp.addEventListener('click', event => toggleVolumeMenu(event))
+volumeDown.addEventListener('click', event => toggleVolumeMenu(event))
+volumeMute.addEventListener('click', event => toggleVolumeMenu(event))
+volumeOff.addEventListener('click', event => toggleVolumeMenu(event))
 videoContainer.addEventListener('mouseover', showControls)
 videoContainer.addEventListener('mouseout', hideControls)
 videoElem.addEventListener('click', togglePlayingByMouse)
