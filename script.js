@@ -28,8 +28,11 @@ const initialQuality = document.querySelector('#initial_quality')
 const volumeInput = document.querySelector('#vol_range')
 const prevImg = document.querySelector('#prev_img')
 const nextImg = document.querySelector('#next_img')
+const adBanner = document.querySelector('.ad_container')
+const closeAdBtn = document.querySelector('.close_ad_btn')
 
 const playVideo = () => {
+  hideAdBanner()
   videoElem.play()
   hideThumblains()
   playBtn.style.display = "none"
@@ -38,6 +41,7 @@ const playVideo = () => {
 
 const pauseVideo = () => {
   videoElem.pause()
+  showAdBanner()
   pauseBtn.style.display = "none"
   playBtn.style.display = "block"
 }
@@ -93,21 +97,17 @@ const updateTime = () => {
 
 const showControls = () => {
   updateTime()
-  // controlsDiv.style.display = "flex"
-}
-
-const hideControls = () => {
-  // controlsDiv.style.display = "none"
 }
 
 const togglePlayingByMouse = () => {
   if (videoElem.paused) {
+    hideAdBanner()
     videoElem.play()
     playBtn.style.display = "none"
     pauseBtn.style.display = "block"
-    setTimeout(hideControls, 2000)
   } else {
     videoElem.pause()
+    showAdBanner()
     pauseBtn.style.display = "none"
     playBtn.style.display = "block"
     showControls()
@@ -118,12 +118,13 @@ const togglePlayingByMouse = () => {
 const togglePlayingByKeyboard = (event) => {
   if (event.code == "Space") {
     if (videoElem.paused) {
+      hideAdBanner()
       videoElem.play()
       playBtn.style.display = "none"
       pauseBtn.style.display = "block"
-      setTimeout(hideControls, 2000)
     } else {
       videoElem.pause()
+      showAdBanner()
       pauseBtn.style.display = "none"
       playBtn.style.display = "block"
       showControls()
@@ -284,6 +285,7 @@ const playNextVideo = () => {
   currentVideoIndex += 1
   currentVideoIndex %= videos.length
   hideThumblains()
+  hideAdBanner()
   resetVideo()
 }
 
@@ -293,6 +295,7 @@ const playPrevVideo = () => {
     currentVideoIndex = videos.length - 1
   }
   hideThumblains()
+  hideAdBanner()
   resetVideo()
 }
 
@@ -335,6 +338,14 @@ const changeQuality = (event) => {
   // To be completed later
 }
 
+const showAdBanner = () => {
+  adBanner.style.display = "block"
+}
+
+const hideAdBanner = () => {
+  adBanner.style.display = "none"
+}
+
 // Initialization
 
 const videos = ['khaarmaadar.mp4', 'dance.mp4', 'ha.mp4', 'jumong.mp4',
@@ -370,7 +381,6 @@ volumeDown.addEventListener('click', event => toggleVolumeMenu(event))
 volumeMute.addEventListener('click', event => toggleVolumeMenu(event))
 volumeOff.addEventListener('click', event => toggleVolumeMenu(event))
 videoContainer.addEventListener('mouseover', showControls)
-videoContainer.addEventListener('mouseout', hideControls)
 videoElem.addEventListener('click', togglePlayingByMouse)
 document.addEventListener('keydown', (event) => togglePlayingByKeyboard(event))
 videoContainer.addEventListener('mousewheel', event => changeVolumeByScroll(event))
@@ -388,3 +398,4 @@ speedMenu.addEventListener('click', (event) => changeSpeed(event))
 qualityMenu.addEventListener('click', (event) => changeQuality(event))
 prevImg.addEventListener('click', playPrevVideo)
 nextImg.addEventListener('click', playNextVideo)
+closeAdBtn.addEventListener('click', hideAdBanner)
