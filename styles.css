@@ -25,6 +25,31 @@ video {
   background-color: #000;
 }
 
+#prev_img {
+  position: absolute;
+  left: 5%;
+  bottom: 10%;
+  opacity: 1;
+  display: none;
+  width: 30%;
+  height: 30%;
+}
+
+#next_img {
+  position: absolute;
+  right: 5%;
+  bottom: 10%;
+  opacity: 1;
+  display: none;
+  width: 30%;
+  height: 30%;
+}
+
+#prev_img:hover, #next_img:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
 .controls {
   display: flex;
   position: absolute;
@@ -89,7 +114,7 @@ i:hover {
   position: absolute;
   display: flex;
   align-items: center;
-  top: 40%;
+  top: 30%;
   left: 25%;
   width: 50%;
   justify-content: space-around;
@@ -146,7 +171,6 @@ i:hover {
     outline: none;
     border: none;
     transition: 0.4s;
-
 }
 
 .volume_icons #vol_range::-webkit-slider-thumb {

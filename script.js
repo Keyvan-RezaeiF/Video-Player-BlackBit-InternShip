@@ -26,9 +26,12 @@ const qualityBtn = document.querySelector('#quality_menu')
 const qualityMenu = document.querySelector('#quality_sub_menu')
 const initialQuality = document.querySelector('#initial_quality')
 const volumeInput = document.querySelector('#vol_range')
+const prevImg = document.querySelector('#prev_img')
+const nextImg = document.querySelector('#next_img')
 
 const playVideo = () => {
   videoElem.play()
+  hideThumblains()
   playBtn.style.display = "none"
   pauseBtn.style.display = "block"
 }
@@ -109,6 +112,7 @@ const togglePlayingByMouse = () => {
     playBtn.style.display = "block"
     showControls()
   }
+  hideThumblains()
 }
 
 const togglePlayingByKeyboard = (event) => {
@@ -124,6 +128,7 @@ const togglePlayingByKeyboard = (event) => {
       playBtn.style.display = "block"
       showControls()
     }
+    hideThumblains()
   }
 }
 
@@ -196,6 +201,29 @@ const changeVideoTime = (event) => {
   coloredBar.style.width = toBeColored * 100 + '%';
 }
 
+const hideThumblains = () => {
+  prevImg.style.display = "none"
+  nextImg.style.display = "none"
+}
+
+const showThumblains = () => {
+  let prevImgIndex, nextImgIndex
+  if (currentVideoIndex == 0) {
+    prevImgIndex = videos.length - 1
+    nextImgIndex = currentVideoIndex + 1
+  } else if (currentVideoIndex == videos.length - 1) {
+    prevImgIndex = currentVideoIndex - 1
+    nextImgIndex = 0
+  } else {
+    prevImgIndex = currentVideoIndex - 1
+    nextImgIndex = currentVideoIndex + 1
+  }
+  prevImg.src = `./images/${posters[prevImgIndex]}`
+  prevImg.style.display = "block"
+  nextImg.src = `./images/${posters[nextImgIndex]}`
+  nextImg.style.display = "block"
+}
+
 const checkIfVideoFinished = () => {
   setInterval(() => {
     if (videoElem.currentTime == videoElem.duration) {
@@ -203,6 +231,7 @@ const checkIfVideoFinished = () => {
       playBtn.style.display = "block"
       videoElem.style.opacity = "0.3"
       afterFinishDiv.style.display = "flex"
+      showThumblains()
       // go to next video after finishing current video
       // timeoutId = setTimeout(playNextVideo, 3000)
       // clearTimeout(timeoutId)
@@ -254,6 +283,7 @@ const resetVideo = () => {
 const playNextVideo = () => {
   currentVideoIndex += 1
   currentVideoIndex %= videos.length
+  hideThumblains()
   resetVideo()
 }
 
@@ -262,6 +292,7 @@ const playPrevVideo = () => {
   if (currentVideoIndex == -1) {
     currentVideoIndex = videos.length - 1
   }
+  hideThumblains()
   resetVideo()
 }
 
@@ -276,6 +307,7 @@ const replayVideo = () => {
   coloredBar.style.width = "0%"
   afterFinishDiv.style.display = "none"
   videoElem.style.opacity = "1"
+  hideThumblains()
 }
 
 const toggleMenuOptions = (event, selectedMenu) => {
@@ -310,6 +342,10 @@ const videos = ['khaarmaadar.mp4', 'dance.mp4', 'ha.mp4', 'jumong.mp4',
                 'rohani.mp4', 'ronaldo.mp4', 'tasirgozar.mp4', 'zakhmekari.mp4']
 let currentVideoIndex = 0
 videoElem.src = `./videos/${videos[0]}`
+
+const posters = ['khaarmadar.jpg', 'dance.jpg', 'ha.jpg', 'jumong.jpg',
+'kelas_uni.jpg', 'kheiliHmAwli.jpg', 'monica.jpg','navid.jpg',
+'rohani.jpg', 'ronaldo.jpg', 'tasirgozar.jpg', 'zakhmekari.jpg']
 
 // controlsDiv.style.display = "none"
 showTime()
@@ -350,3 +386,5 @@ speedBtn.addEventListener('click', (event) => toggleMenuOptions(event, speedMenu
 moreBtn.addEventListener('click', (event) => toggleMenuOptions(event, moreOptions))
 speedMenu.addEventListener('click', (event) => changeSpeed(event))
 qualityMenu.addEventListener('click', (event) => changeQuality(event))
+prevImg.addEventListener('click', playPrevVideo)
+nextImg.addEventListener('click', playNextVideo)
