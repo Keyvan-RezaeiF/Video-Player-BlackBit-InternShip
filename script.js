@@ -95,11 +95,11 @@ const updateTime = () => {
 
 const showControls = () => {
   updateTime()
-  controlsDiv.style.display = "flex"
+  // controlsDiv.style.display = "flex"
 }
 
 const hideControls = () => {
-  controlsDiv.style.display = "none"
+  // controlsDiv.style.display = "none"
 }
 
 const togglePlayingByMouse = () => {
@@ -167,7 +167,7 @@ const checkIfVideoFinished = () => {
 
 const goBackOrForward = (event) => {
   if (event.code == "ArrowRight") {
-    videoElem.currentTime += 5  
+    videoElem.currentTime += 5
     updateTime()
   } else if (event.code == "ArrowLeft") {
     videoElem.currentTime -= 5
@@ -187,7 +187,7 @@ const goBackOrForward = (event) => {
 
 const resetVideo = () => {
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
-  controlsDiv.style.display = "none"
+  // controlsDiv.style.display = "none"
   showTime()
   pauseBtn.style.display = "none"
   playBtn.style.display = "block"
@@ -214,7 +214,7 @@ const playPrevVideo = () => {
 const replayVideo = () => {
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
   videoElem.currentTime = 0
-  controlsDiv.style.display = "none"
+  // controlsDiv.style.display = "none"
   showTime()
   playVideo()
   pauseBtn.style.display = "block"
@@ -258,7 +258,7 @@ const videos = ['dance.mp4', 'ha.mp4', 'jumong.mp4', 'kelas_uni.mp4',
 let currentVideoIndex = 0
 videoElem.src = `./videos/${videos[0]}`
 
-controlsDiv.style.display = "none"
+// controlsDiv.style.display = "none"
 showTime()
 videoElem.volume = 1
 pauseBtn.style.display = "none"

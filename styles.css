@@ -6,7 +6,9 @@
 
 .container {
   display: flex;
-  background: #ccc;
+  background: 333;
+  background: linear-gradient(135deg, #000 0%, #333 48%, #686868 100%);
+  background-size: cover;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -26,11 +28,22 @@ video {
 .controls {
   display: flex;
   position: absolute;
-  transition: 0.3s;
-  bottom: 5px;
+  bottom: 0;
   width: 100%;
   flex-wrap: wrap;
   background-color: rgba(0, 0, 0, 0.3);
+  transition: 1s;
+  transform: translateY(-5px);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 1000ms;
+}
+
+.video_container:hover .controls {
+  transform: translateY(-5px);
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 300ms;
 }
 
 .buttons {
