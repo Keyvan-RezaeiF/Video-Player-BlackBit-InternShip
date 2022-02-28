@@ -1,8 +1,7 @@
 const videoElem = document.querySelector('video')
-const playBtn = document.querySelector('.gg-play-button-o')
-const pauseBtn = document.querySelector('.gg-play-pause-o')
+const playBtn = document.querySelector('.play_btn')
+const pauseBtn = document.querySelector('.pause_btn')
 const fullScreenBtn = document.querySelector('.full_screen')
-const settingsBtn = document.querySelector('.gg-more')
 const volumeUp = document.querySelector('.volume_2')
 const volumeDown = document.querySelector('.volume_1')
 const volumeMute = document.querySelector('.volume_0')
@@ -13,18 +12,18 @@ const timeDiv = document.querySelector('#time')
 const controlsDiv = document.querySelector(".controls")
 const coloredBar = document.querySelector('.colored_bar')
 const seekBar = document.querySelector('.seek_bar')
-const nextBtn = document.querySelector('.gg-play-track-next-o')
-const prevBtn = document.querySelector('.gg-play-track-prev-o')
+const nextBtn = document.querySelector('.next_btn')
+const prevBtn = document.querySelector('.prev_btn')
 const reaplyBtn = document.querySelector('.replay_img')
 const nextAfterFinishBtn = document.querySelector('.next_video_img')
 const afterFinishDiv = document.querySelector('.after_finish')
-const speedBtn = document.querySelector('#speed_menu')
-const qualityBtn = document.querySelector('#quality_menu')
-const speedMenu = document.querySelector('#speed_sub_menu')
-const qualityMenu = document.querySelector('#quality_sub_menu')
-const moreBtn = document.querySelector('.gg-more')
+const moreBtn = document.querySelector('.more_btn')
 const moreOptions = document.querySelector('.more_options')
+const speedBtn = document.querySelector('#speed_menu')
+const speedMenu = document.querySelector('#speed_sub_menu')
 const initialSpeed = document.querySelector('#initial_speed')
+const qualityBtn = document.querySelector('#quality_menu')
+const qualityMenu = document.querySelector('#quality_sub_menu')
 const initialQuality = document.querySelector('#initial_quality')
 const volumeInput = document.querySelector('#vol_range')
 
@@ -78,11 +77,11 @@ const showTime = () => {
   // to prevent showing undefined for duration at first time
   videoElem.onloadedmetadata = function() {
     const videoDurationTime = convertToMinutes(videoElem.duration)
-    timeDiv.innerText = `${videoCurrentTime}/${videoDurationTime}`
+    timeDiv.innerText = `${videoCurrentTime} / ${videoDurationTime}`
   };
 
   const videoDurationTime = convertToMinutes(videoElem.duration)
-  timeDiv.innerText = `${videoCurrentTime}/${videoDurationTime}`
+  timeDiv.innerText = `${videoCurrentTime} / ${videoDurationTime}`
 }
 
 const updateTime = () => {
@@ -306,10 +305,9 @@ const changeQuality = (event) => {
 
 // Initialization
 
-const videos = ['dance.mp4', 'ha.mp4', 'jumong.mp4', 'kelas_uni.mp4',
-                'khaarmaadar.mp4', 'kheiliHmAwli.mp4', 'monica.mp4',
-                'navid.mp4', 'rohani.mp4', 'ronaldo.mp4', 'tasirgozar.mp4',
-                'zakhmekari.mp4']
+const videos = ['khaarmaadar.mp4', 'dance.mp4', 'ha.mp4', 'jumong.mp4',
+                'kelas_uni.mp4', 'kheiliHmAwli.mp4', 'monica.mp4','navid.mp4',
+                'rohani.mp4', 'ronaldo.mp4', 'tasirgozar.mp4', 'zakhmekari.mp4']
 let currentVideoIndex = 0
 videoElem.src = `./videos/${videos[0]}`
 
@@ -349,6 +347,6 @@ reaplyBtn.addEventListener('click', replayVideo)
 nextAfterFinishBtn.addEventListener('click', playNextVideo)
 qualityBtn.addEventListener('click', (event) => toggleMenuOptions(event, qualityMenu))
 speedBtn.addEventListener('click', (event) => toggleMenuOptions(event, speedMenu))
-settingsBtn.addEventListener('click', (event) => toggleMenuOptions(event, moreOptions))
+moreBtn.addEventListener('click', (event) => toggleMenuOptions(event, moreOptions))
 speedMenu.addEventListener('click', (event) => changeSpeed(event))
 qualityMenu.addEventListener('click', (event) => changeQuality(event))

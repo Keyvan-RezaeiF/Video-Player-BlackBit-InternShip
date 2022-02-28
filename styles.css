@@ -103,10 +103,6 @@ i:hover {
   position: relative;
 }
 
-.more_menu i {
-  position: absolute;
-}
-
 .more_options {
   width: 140px;
   position: absolute;
