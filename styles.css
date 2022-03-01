@@ -45,7 +45,8 @@ video {
   height: 30%;
 }
 
-#prev_img:hover, #next_img:hover {
+#prev_img:hover,
+#next_img:hover {
   cursor: pointer;
   opacity: 0.8;
 }
@@ -106,7 +107,7 @@ video {
   align-items: center;
   width: 100%;
   justify-content: space-around;
-  height:30px;
+  height: 30px;
 }
 
 i {
@@ -123,6 +124,8 @@ i:hover {
   color: #ddd;
 }
 
+/* Seek Bar */
+
 .seek_bar {
   background-color: rgba(255, 255, 255, 0.4);
   height: 5px;
@@ -138,6 +141,7 @@ i:hover {
   background-color: #f00;
 }
 
+/* After video finished */
 
 .after_finish {
   z-index: 1;
@@ -154,77 +158,133 @@ i:hover {
   cursor: pointer;
 }
 
-.more_menu {
+/* Settings Menu */
+
+#settings {
+  position: absolute;
+  text-align: center;
+  bottom: 35px;
+  right: 20px;
+  background: rgb(28 28 28 / 90%);
+  width: 200px;
+  height: 120px;
+  display: none;
+  overflow-y: scroll;
+  padding: 12px 33px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#settings::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#settings {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+#settings .sub_menu {
+  margin: 17px 0;
+}
+
+#settings span {
+  font-size: large;
+}
+
+#speed_menu:hover,
+#quality_menu:hover {
+  cursor: pointer;
+}
+
+.settings_btn {
+  transition: 0.3s;
+  transform: rotate(-45deg);
+}
+
+.sub_menu_content ul {
   position: relative;
 }
 
-.more_options {
-  width: 140px;
-  position: absolute;
-  bottom: 20px;
+.sub_menu_content ul li {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
   text-align: center;
-  display: none;
-}
-
-.more_options a {
-  text-decoration: none;
-  color: #ddd;
-  background-color: rgba(0, 0, 0, 0.4);
+  padding: 12px 33px;
   display: block;
-  padding: 10px;
+  color: #ddd;
 }
 
-.more_btn:hover {
-  transform: rotate(10deg);
+.sub_menu_content ul li:hover {
+  background: rgba(28, 28, 28, 0.9);
 }
 
-.sub_menu_content {
-  background-color: rgba(0, 0, 0, 0.4);
+.sub_menu_content ul li.active::before {
+  content: "\e876";
+  font-family: "Material Icons";
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-right: 10px;
+  font-size: 18px;
 }
 
-.sub_menu_content a:hover {
-  color: #aaa;
+.sub_menu::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
 }
 
-#quality_sub_menu, #speed_sub_menu {
+.sub_menu::-webkit-scrollbar-thumb {
+  height: 20px;
+  border: 2px solid transparent;
+  background: rgba(83, 83, 83, 0.9);
+  border-radius: 20px;
+}
+
+#quality_sub_menu,
+#speed_sub_menu {
   display: none;
 }
+
+/* Volume Icon & Volume Range */
 
 .volume_icons #vol_range {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 60px;
-    height: 3px;
-    background: #fff;
-    color: #fff;
-    cursor: pointer;
-    outline: none;
-    border: none;
-    transition: 0.4s;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 60px;
+  height: 3px;
+  background: #fff;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: 0.4s;
 }
 
 .volume_icons #vol_range::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    background: #ddd;
-    opacity: 0;
-    transition: 0.3s;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background: #ddd;
+  opacity: 0;
+  transition: 0.3s;
 }
 
 .volume_icons:hover #vol_range {
-    display: inline-block;
-    width: 60px;
+  display: inline-block;
+  width: 60px;
 }
 
 .volume_icons:hover #vol_range::-webkit-slider-thumb {
-    opacity: 1;
-    pointer-events: auto;
-    transition: 0.5s;
+  opacity: 1;
+  pointer-events: auto;
+  transition: 0.5s;
 }
 
 .volume_icons {

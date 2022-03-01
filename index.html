@@ -48,31 +48,37 @@
               >
             </div>
             <span id="time">00:00 / 00:00</span>
-            <div class="more_menu">
-              <div class="more_options">
-                <div class="sub_menu">
-                  <a id="speed_menu" href="#">Playback speed</a>
-                  <div id="speed_sub_menu" class="sub_menu_content">
-                    <a href="#">2</a>
-                    <a href="#">1.5</a>
-                    <a id="initial_speed" href="#">1</a>
-                    <a href="#">0.5</a>
-                  </div>
+            <div id="settings">
+              <div class="sub_menu">
+                <span id="speed_menu">Playback speed</span>
+                <div id="speed_sub_menu" class="sub_menu_content">
+                  <ul>
+                    <li data-speed="0.25">0.25</li>
+                    <li data-speed="0.5">0.5</li>
+                    <li data-speed="0.75">0.75</li>
+                    <li data-speed="1" class="active">Normal</li>
+                    <li data-speed="1.25">1.25</li>
+                    <li data-speed="1.5">1.5</li>
+                    <li data-speed="1.75">1.75</li>
+                    <li data-speed="2">2</li>
+                  </ul>
                 </div>
-                <div class="sub_menu">
-                  <a id="quality_menu" href="#">Quality</a>
-                  <div id="quality_sub_menu" class="sub_menu_content">
-                    <a href="#">1080p</a>
-                    <a href="#">720p</a>
-                    <a href="#">480p</a>
-                    <a href="#">360p</a>
-                    <a href="#">240p</a>
-                    <a id="initial_quality" href="#">Auto</a>
-                  </div>
+              </div>
+              <div class="sub_menu">
+                <span id="quality_menu">Quality</span>
+                <div id="quality_sub_menu" class="sub_menu_content">
+                  <ul>
+                    <li data-quality="1080">1080p</li>
+                    <li data-quality="720">720p</li>
+                    <li data-quality="480">480p</li>
+                    <li data-quality="360">360p</li>
+                    <li data-quality="240">240p</li>
+                    <li data-quality="Auto" class="active">Auto</li>
+                  </ul>
                 </div>
               </div>
             </div>
-            <i class="material-icons more_btn">settings</i>
+            <i class="material-icons settings_btn">settings</i>
             <i class="material-icons full_screen">fullscreen</i>
           </div>
         </div>

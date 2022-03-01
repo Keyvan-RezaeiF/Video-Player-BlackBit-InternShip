@@ -6,7 +6,6 @@ const volumeUp = document.querySelector('.volume_2')
 const volumeDown = document.querySelector('.volume_1')
 const volumeMute = document.querySelector('.volume_0')
 const volumeOff = document.querySelector('.volume_mute')
-const buttons = document.querySelector('.buttons')
 const videoContainer = document.querySelector('.video_container')
 const timeDiv = document.querySelector('#time')
 const controlsDiv = document.querySelector(".controls")
@@ -14,22 +13,21 @@ const coloredBar = document.querySelector('.colored_bar')
 const seekBar = document.querySelector('.seek_bar')
 const nextBtn = document.querySelector('.next_btn')
 const prevBtn = document.querySelector('.prev_btn')
-const reaplyBtn = document.querySelector('.replay_img')
+const repalyBtn = document.querySelector('.replay_img')
 const nextAfterFinishBtn = document.querySelector('.next_video_img')
 const afterFinishDiv = document.querySelector('.after_finish')
-const moreBtn = document.querySelector('.more_btn')
-const moreOptions = document.querySelector('.more_options')
-const speedBtn = document.querySelector('#speed_menu')
-const speedMenu = document.querySelector('#speed_sub_menu')
-const initialSpeed = document.querySelector('#initial_speed')
-const qualityBtn = document.querySelector('#quality_menu')
-const qualityMenu = document.querySelector('#quality_sub_menu')
-const initialQuality = document.querySelector('#initial_quality')
 const volumeInput = document.querySelector('#vol_range')
 const prevImg = document.querySelector('#prev_img')
 const nextImg = document.querySelector('#next_img')
 const adBanner = document.querySelector('.ad_container')
 const closeAdBtn = document.querySelector('.close_ad_btn')
+const settings = document.querySelector('#settings')
+const settingsBtn = document.querySelector('.settings_btn')
+const speedBtn = document.querySelector('#speed_menu')
+const speedMenu = document.querySelector('#speed_sub_menu')
+const qualityBtn = document.querySelector('#quality_menu')
+const qualityMenu = document.querySelector('#quality_sub_menu')
+const initialQuality = document.querySelector('#initial_quality')
 
 const playVideo = () => {
   hideAdBanner()
@@ -134,7 +132,6 @@ const togglePlayingByKeyboard = (event) => {
 }
 
 const changeVolumeByScroll = (event) => {
-  console.log(event)
   event = window.event || event;
   let delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
@@ -233,9 +230,6 @@ const checkIfVideoFinished = () => {
       videoElem.style.opacity = "0.3"
       afterFinishDiv.style.display = "flex"
       showThumblains()
-      // go to next video after finishing current video
-      // timeoutId = setTimeout(playNextVideo, 3000)
-      // clearTimeout(timeoutId)
     } else {
       videoElem.style.opacity = "1"
       afterFinishDiv.style.display = "none"
@@ -271,14 +265,13 @@ const goBackOrForward = (event) => {
 
 const resetVideo = () => {
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
-  // controlsDiv.style.display = "none"
   showTime()
   pauseBtn.style.display = "none"
   playBtn.style.display = "block"
   coloredBar.style.width = "0%"
   afterFinishDiv.style.display = "none"
   videoElem.style.opacity = "1"
-  moreOptions.style.display = ""
+  settings.style.display = ""
 }
 
 const showVideoPoster = () => {
@@ -308,7 +301,6 @@ const playPrevVideo = () => {
 const replayVideo = () => {
   videoElem.src = `./videos/${videos[currentVideoIndex]}`
   videoElem.currentTime = 0
-  // controlsDiv.style.display = "none"
   showTime()
   playVideo()
   pauseBtn.style.display = "block"
@@ -327,17 +319,18 @@ const toggleMenuOptions = (event, selectedMenu) => {
   }
 }
 
-const changeSelectedColor = (selectedElem) => {
-  const parentsChildren = selectedElem.parentElement.children
-  for (child of parentsChildren) {
-    child.style.backgroundColor = "rgba(0, 0, 0, 0.4)"
-  }
-  selectedElem.style.backgroundColor = "rgba(0, 0, 0)"
-}
-
 const changeSpeed = (event) => {
-  videoElem.playbackRate = event.target.innerText
-  changeSelectedColor(event.target)
+  const selectedItem = event.target
+  if (selectedItem.innerText == "Normal") {
+    videoElem.playbackRate = "1"
+  } else {
+    videoElem.playbackRate = selectedItem.innerText
+  }
+  const parentsChildren = selectedItem.parentElement.children
+  for (child of parentsChildren) {
+    child.classList.remove('active')
+  }
+  selectedItem.classList.add('active')
 }
 
 const changeQuality = (event) => {
@@ -373,9 +366,6 @@ pauseBtn.style.display = "none"
 coloredBar.style.width = "0%"
 afterFinishDiv.style.display = "none"
 
-changeSelectedColor(initialSpeed)
-changeSelectedColor(initialQuality)
-
 checkIfVideoFinished()
 
 // Event Listeners
@@ -390,19 +380,19 @@ volumeOff.addEventListener('click', event => toggleVolumeMenu(event))
 videoContainer.addEventListener('mouseover', showControls)
 videoElem.addEventListener('click', togglePlayingByMouse)
 document.addEventListener('keydown', (event) => togglePlayingByKeyboard(event))
-videoContainer.addEventListener('mousewheel', event => changeVolumeByScroll(event))
+videoElem.addEventListener('mousewheel', event => changeVolumeByScroll(event))
 videoElem.addEventListener('timeupdate', updateSeekBar)
 seekBar.addEventListener('click', (event) => changeVideoTime(event))
 document.addEventListener('keydown', (event) => goBackOrForward(event))
 nextBtn.addEventListener('click', playNextVideo)
 prevBtn.addEventListener('click', playPrevVideo)
-reaplyBtn.addEventListener('click', replayVideo)
+repalyBtn.addEventListener('click', replayVideo)
 nextAfterFinishBtn.addEventListener('click', playNextVideo)
-qualityBtn.addEventListener('click', (event) => toggleMenuOptions(event, qualityMenu))
-speedBtn.addEventListener('click', (event) => toggleMenuOptions(event, speedMenu))
-moreBtn.addEventListener('click', (event) => toggleMenuOptions(event, moreOptions))
-speedMenu.addEventListener('click', (event) => changeSpeed(event))
-qualityMenu.addEventListener('click', (event) => changeQuality(event))
+closeAdBtn.addEventListener('click', hideAdBanner)
 prevImg.addEventListener('click', playPrevVideo)
 nextImg.addEventListener('click', playNextVideo)
-closeAdBtn.addEventListener('click', hideAdBanner)
+settingsBtn.addEventListener('click', (event) => toggleMenuOptions(event, settings))
+speedBtn.addEventListener('click', (event) => toggleMenuOptions(event, speedMenu))
+speedMenu.addEventListener('click', (event) => changeSpeed(event))
+qualityBtn.addEventListener('click', (event) => toggleMenuOptions(event, qualityMenu))
+qualityMenu.addEventListener('click', (event) => changeQuality(event))
