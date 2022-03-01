@@ -281,12 +281,17 @@ const resetVideo = () => {
   moreOptions.style.display = ""
 }
 
+const showVideoPoster = () => {
+  videoElem.poster = `./images/${posters[currentVideoIndex]}`
+}
+
 const playNextVideo = () => {
   currentVideoIndex += 1
   currentVideoIndex %= videos.length
   hideThumblains()
   hideAdBanner()
   resetVideo()
+  showVideoPoster()
 }
 
 const playPrevVideo = () => {
@@ -297,6 +302,7 @@ const playPrevVideo = () => {
   hideThumblains()
   hideAdBanner()
   resetVideo()
+  showVideoPoster()
 }
 
 const replayVideo = () => {
@@ -355,8 +361,9 @@ let currentVideoIndex = 0
 videoElem.src = `./videos/${videos[0]}`
 
 const posters = ['khaarmadar.jpg', 'dance.jpg', 'ha.jpg', 'jumong.jpg',
-'kelas_uni.jpg', 'kheiliHmAwli.jpg', 'monica.jpg','navid.jpg',
-'rohani.jpg', 'ronaldo.jpg', 'tasirgozar.jpg', 'zakhmekari.jpg']
+                 'kelas_uni.jpg', 'kheiliHmAwli.jpg', 'monica.jpg','navid.jpg',
+                 'rohani.jpg', 'ronaldo.jpg', 'tasirgozar.jpg', 'zakhmekari.jpg']
+videoElem.poster = `./images/${posters[0]}`
 
 // controlsDiv.style.display = "none"
 showTime()
