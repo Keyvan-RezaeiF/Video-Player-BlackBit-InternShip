@@ -81,12 +81,13 @@ const showTime = () => {
 
   // to prevent showing undefined for duration at first time
   videoElem.onloadedmetadata = function() {
+    console.log(videoElem.duration)
     const videoDurationTime = convertToMinutes(videoElem.duration)
     timeDiv.innerText = `${videoCurrentTime} / ${videoDurationTime}`
   };
 
-  const videoDurationTime = convertToMinutes(videoElem.duration)
-  timeDiv.innerText = `${videoCurrentTime} / ${videoDurationTime}`
+  // const videoDurationTime = convertToMinutes(videoElem.duration)
+  // timeDiv.innerText = `${videoCurrentTime} / ${videoDurationTime}`
 }
 
 const updateTime = () => {

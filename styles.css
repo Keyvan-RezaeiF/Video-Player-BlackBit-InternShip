@@ -90,9 +90,9 @@ video {
   background-color: rgba(0, 0, 0, 0.3);
   transition: 1s;
   transform: translateY(-5px);
-  visibility: hidden;
+  /* visibility: hidden;
   opacity: 0;
-  transition: visibility 0s linear 300ms, opacity 1000ms;
+  transition: visibility 0s linear 300ms, opacity 1000ms; */
 }
 
 .video_container:hover .controls {
